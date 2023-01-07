@@ -8,14 +8,15 @@ import { TableTransactions } from './components/TableTransactions'
 function App () {
   const [blockNumber, setBlockNumber] = useState('')
 
-  const getInfoBlock = (event) => {
+  const searchData = (event) => {
     event.preventDefault()
     console.log('get')
   }
 
   return (
     <div className='w-5/6 mx-auto mt-8'>
-      <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={getInfoBlock}>
+      <h1 className='font-bold text-2xl mb-4'>Ethereum Block Explorer</h1>
+      <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={searchData}>
         <div className='mb-4'>
           <label className='block text-gray-700 text-sm font-bold mt-4 mb-2' htmlFor='blockNumber'>
             Insert a block number, transaction hash or an address...

@@ -22,15 +22,11 @@ export const TableTransactions = () => {
   useEffect(async () => {
     async function getLastsNBlocks (num = 5) {
       const lastBlock = await alchemy.core.getBlockNumber()
-      const lastBlockInfo = await alchemy.core.getBlock(lastBlock)
-      const transactionsIds = lastBlockInfo.transactions.slice(0, 5)
+      const lastBlockInfo = await alchemy.core.getBlockWithTransactions(lastBlock)
+      const transactions = lastBlockInfo.transactions.slice(0, 5)
 
-      const transactions = []
-      for (const tx of transactionsIds) {
-        const info = await alchemy.core.getTransaction(tx)
-        info.value = Utils.formatUnits(info.value, 'ether')
-        console.log(info)
-        transactions.push(info)
+      for (const id in transactions) {
+        transactions[id].value = Utils.formatUnits(transactions[id].value, 'ether')
       }
 
       return transactions
