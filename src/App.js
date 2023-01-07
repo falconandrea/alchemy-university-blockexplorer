@@ -1,49 +1,41 @@
-import { Alchemy, Network } from 'alchemy-sdk'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import './App.css'
 
-// Refer to the README doc for more information about using API
-// keys in client-side code. You should never do this in production
-// level code.
-const settings = {
-  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET
-}
-
-// In this week's lessons we used ethers.js. Here we are using the
-// Alchemy SDK is an umbrella library with several different packages.
-//
-// You can read more about the packages here:
-//   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings)
+import { TableBlock } from './components/TableBlock'
 
 function App () {
-  const [blockNumber, setBlockNumber] = useState()
+  const [blockNumber, setBlockNumber] = useState('')
 
-  useEffect(() => {
-    async function getBlockNumber () {
-      setBlockNumber(await alchemy.core.getBlockNumber())
-    }
-
-    getBlockNumber()
-  })
+  const getInfoBlock = (event) => {
+    event.preventDefault()
+    console.log('get')
+  }
 
   return (
-    <div class='w-full max-w-xs mx-auto mt-8'>
-      <form class='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
-        <div class='mb-4'>
-          <label class='block text-gray-700 text-sm font-bold mb-2' for='blockNumber'>
-            Insert a block number
+    <div className='w-5/6 mx-auto mt-8'>
+      <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={getInfoBlock}>
+        <div className='mb-4'>
+          <label className='block text-gray-700 text-sm font-bold mt-4 mb-2' htmlFor='blockNumber'>
+            Insert a block number, transaction hash or an address...
           </label>
-          <input class='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' id='blockNumber' type='text' placeholder='Insert a block number' />
+          <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' onChange={(e) => setBlockNumber(e.target.value)} value={blockNumber} id='blockNumber' type='text' placeholder='Insert here...' />
         </div>
-        <div class='flex items-center justify-between'>
-          <button class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='button'>
-            Get info
+        <div className='flex items-center justify-between'>
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
+            Search
           </button>
         </div>
       </form>
+      <div className='lg:flex lg:flex-row lg:space-x-4'>
+        <div className='w-full lg:w-1/2 bg-white shadow-md rounded p-8 mb-4'>
+          <p className='block text-sm mb-4'><strong className='text-gray-700'>Last 5 blocks</strong></p>
+          <TableBlock />
+        </div>
+        <div className='w-full lg:w-1/2 bg-white shadow-md rounded p-8 mb-4'>
+          <p className='block text-sm mb-4'><strong className='text-gray-700'>Last 5 transactions</strong></p>
+        </div>
+      </div>
     </div>
   )
 }
