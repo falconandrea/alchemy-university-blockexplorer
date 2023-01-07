@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { getBlockNumber, getBlock, convertToEth } from '../utils'
 import { Link } from 'react-router-dom'
 
-export const TableTransactions = () => {
+export const TableTransactions = ({ listTransactions = [] }) => {
   const [lastTransactions, setLastTransactions] = useState([])
 
   useEffect(async () => {
@@ -11,16 +11,17 @@ export const TableTransactions = () => {
       const lastBlockInfo = await getBlock(lastBlock, true)
       const transactions = lastBlockInfo.transactions.slice(0, 5)
 
-      for (const id in transactions) {
-        transactions[id].value = convertToEth(transactions[id].value)
-      }
-
       return transactions
     }
 
-    const transactions = await getLastsNBlocks()
-    setLastTransactions(transactions)
-  }, [])
+    // If receive a list of transactions
+    if (listTransactions.length > 0) setLastTransactions(listTransactions)
+    else {
+      // Or I get latest transactions for the last block
+      const transactions = await getLastsNBlocks()
+      setLastTransactions(transactions)
+    }
+  })
 
   if (!lastTransactions || lastTransactions.length === 0) { return ('Getting data...') }
   if (lastTransactions.length > 0) {
@@ -56,7 +57,7 @@ export const TableTransactions = () => {
                           To <Link className='underline' to={`/address/${item.to}`} title=''>{item.to.slice(0, 6)}...</Link>
                         </td>
                         <td className='text-sm font-light text-gray-900 p-2 pl-0 whitespace-nowrap'>
-                          {item.value} ETH
+                          {convertToEth(item.value)} ETH
                         </td>
                       </tr>
                     )

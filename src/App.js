@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Home from './Pages/Home'
 import Transaction from './Pages/Transaction'
+import TransactionList from './Pages/TransactionList'
 import Address from './Pages/Address'
 import Block from './Pages/Block'
 import { getBlock } from './utils'
@@ -49,6 +50,7 @@ function App () {
           <Route path='/tx/:hash' element={<Transaction />} />
           <Route path='/address/:hash' element={<Address />} />
           <Route path='/block/:hash' element={<Block />} />
+          <Route path='/block/:hash/tx' element={<TransactionList />} />
         </Routes>
       </div>
     </BrowserRouter>
