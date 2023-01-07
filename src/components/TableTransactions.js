@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getBlockNumber, getBlock, convertToEth } from '../utils'
+import { Link } from 'react-router-dom'
 
 export const TableTransactions = () => {
   const [lastTransactions, setLastTransactions] = useState([])
@@ -47,12 +48,12 @@ export const TableTransactions = () => {
                     return (
                       <tr className='border-b' key={index}>
                         <td className='text-sm font-light text-gray-900 p-2 pl-0 whitespace-nowrap'>
-                          <a className='underline' href={`/tx/${item.hash}`} title=''>{item.hash.slice(0, 6)}...</a>
+                          <Link className='underline' to={`/tx/${item.hash}`} title=''>{item.hash.slice(0, 6)}...</Link>
                         </td>
                         <td className='text-sm font-light text-gray-900 p-2 pl-0 whitespace-nowrap'>
-                          From <a className='underline' href={`/address/${item.from}`} title=''>{item.from.slice(0, 6)}...</a>
+                          From <Link className='underline' to={`/address/${item.from}`} title=''>{item.from.slice(0, 6)}...</Link>
                           <br />
-                          To <a className='underline' href={`/address/${item.to}`} title=''>{item.to.slice(0, 6)}...</a>
+                          To <Link className='underline' to={`/address/${item.to}`} title=''>{item.to.slice(0, 6)}...</Link>
                         </td>
                         <td className='text-sm font-light text-gray-900 p-2 pl-0 whitespace-nowrap'>
                           {item.value} ETH

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getBlockNumber, getBlock } from '../utils'
+import { Link } from 'react-router-dom'
 
 export const TableBlock = () => {
   const [lastBlocks, setLastBlocks] = useState([])
@@ -45,7 +46,7 @@ export const TableBlock = () => {
                     return (
                       <tr className='border-b' key={index}>
                         <td className='text-sm font-light text-gray-900 p-2 pl-0 whitespace-nowrap'>
-                          <a className='underline' href={`/block/${item.number}`} title=''>{item.number}</a>
+                          <Link className='underline' to={`/block/${item.number}`} title=''>{item.number}</Link>
                         </td>
                         <td className='text-sm text-gray-900 font-light p-2 pl-0 whitespace-nowrap'>
                           {item.transactions ? item.transactions.length : '-'}
