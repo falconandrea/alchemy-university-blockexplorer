@@ -3,6 +3,7 @@ import { useState } from 'react'
 import './App.css'
 
 import { TableBlock } from './components/TableBlock'
+import { TableTransactions } from './components/TableTransactions'
 
 function App () {
   const [blockNumber, setBlockNumber] = useState('')
@@ -34,6 +35,7 @@ function App () {
         </div>
         <div className='w-full lg:w-1/2 bg-white shadow-md rounded p-8 mb-4'>
           <p className='block text-sm mb-4'><strong className='text-gray-700'>Last 5 transactions</strong></p>
+          <TableTransactions />
         </div>
       </div>
     </div>
