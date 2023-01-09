@@ -24,6 +24,14 @@ export const getBlock = async (block, withTransactions = false) => {
   else return await alchemy.core.getBlock(block)
 }
 
+export const getTransaction = async (hash) => {
+  return await alchemy.core.getTransaction(hash)
+}
+
+export const getBalance = async (hash) => {
+  return await alchemy.core.getBalance(hash)
+}
+
 export const convertToEth = (value) => {
   return Utils.formatUnits(value, 'ether')
 }

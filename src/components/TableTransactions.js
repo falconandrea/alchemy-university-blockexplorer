@@ -52,9 +52,9 @@ export const TableTransactions = ({ listTransactions = [] }) => {
                           <Link className='underline' to={`/tx/${item.hash}`} title=''>{item.hash.slice(0, 6)}...</Link>
                         </td>
                         <td className='text-sm font-light text-gray-900 p-2 pl-0 whitespace-nowrap'>
-                          From <Link className='underline' to={`/address/${item.from}`} title=''>{item.from.slice(0, 6)}...</Link>
+                          From {item.from ? <Link className='underline' to={`/address/${item.from}`} title=''>{item.from.slice(0, 6)}...</Link> : '-'}
                           <br />
-                          To <Link className='underline' to={`/address/${item.to}`} title=''>{item.to.slice(0, 6)}...</Link>
+                          To {item.to ? <Link className='underline' to={`/address/${item.to}`} title=''>{item.to.slice(0, 6)}...</Link> : '-'}
                         </td>
                         <td className='text-sm font-light text-gray-900 p-2 pl-0 whitespace-nowrap'>
                           {convertToEth(item.value)} ETH
