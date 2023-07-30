@@ -6,9 +6,12 @@ function Address () {
   const { hash } = useParams()
   const [account, setAccount] = useState({})
 
-  useEffect(async () => {
-    const result = await getBalance(hash)
-    setAccount({ hash: hash, balance: convertToEth(result) })
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getBalance(hash)
+      setAccount({ hash: hash, balance: convertToEth(result) })
+    }
+    fetchData()
   }, [hash])
 
   return (

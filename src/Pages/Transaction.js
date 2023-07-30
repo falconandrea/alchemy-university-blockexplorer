@@ -6,10 +6,13 @@ function Transaction () {
   const { hash } = useParams()
   const [transaction, setTransaction] = useState({})
 
-  useEffect(async () => {
-    const result = await getTransaction(hash)
-    result.value = convertToEth(result.value)
-    setTransaction(result)
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getTransaction(hash)
+      result.value = convertToEth(result.value)
+      setTransaction(result)
+    }
+    fetchData()
   }, [hash])
 
   return (

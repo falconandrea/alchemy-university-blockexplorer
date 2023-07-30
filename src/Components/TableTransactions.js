@@ -5,23 +5,25 @@ import { Link } from 'react-router-dom'
 export const TableTransactions = ({ listTransactions = [] }) => {
   const [lastTransactions, setLastTransactions] = useState([])
 
-  useEffect(async () => {
-    async function getLastsNBlocks (num = 5) {
-      const lastBlock = await getBlockNumber()
-      const lastBlockInfo = await getBlock(lastBlock, true)
-      const transactions = lastBlockInfo.transactions.slice(0, 5)
-
-      return transactions
+  useEffect(() => {
+    async function getLastsNBlocks(num = 5) {
+      const lastBlock = await getBlockNumber();
+      const lastBlockInfo = await getBlock(lastBlock, true);
+      const transactions = lastBlockInfo.transactions.slice(0, num);
+      return transactions;
     }
 
-    // If receive a list of transactions
-    if (listTransactions.length > 0) setLastTransactions(listTransactions)
-    else {
-      // Or I get latest transactions for the last block
-      const transactions = await getLastsNBlocks()
-      setLastTransactions(transactions)
+    async function fetchData() {
+      if (listTransactions.length > 0) {
+        setLastTransactions(listTransactions);
+      } else {
+        const transactions = await getLastsNBlocks();
+        setLastTransactions(transactions);
+      }
     }
-  })
+
+    fetchData();
+  });
 
   if (!lastTransactions || lastTransactions.length === 0) { return ('Getting data...') }
   if (lastTransactions.length > 0) {

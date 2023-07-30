@@ -7,9 +7,12 @@ function TransactionList () {
   const [listTransactions, setListTransactions] = useState([])
   const { hash } = useParams()
 
-  useEffect(async () => {
-    const result = await getBlock(hash, true)
-    setListTransactions(result.transactions)
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getBlock(hash, true)
+      setListTransactions(result.transactions)
+    }
+    fetchData()
   })
 
   return (

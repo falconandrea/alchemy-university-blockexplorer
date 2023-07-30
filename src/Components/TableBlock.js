@@ -5,19 +5,23 @@ import { Link } from 'react-router-dom'
 export const TableBlock = () => {
   const [lastBlocks, setLastBlocks] = useState([])
 
-  useEffect(async () => {
-    async function getLastsNBlocks (num = 5) {
-      const lastBlock = await getBlockNumber()
-      const blocks = []
-      for (let i = 0; i < 5; i++) {
-        const block = await getBlock(lastBlock - i)
-        blocks.push(block)
+  useEffect(() => {
+    async function getLastsNBlocks(num = 5) {
+      const lastBlock = await getBlockNumber();
+      const blocks = [];
+      for (let i = 0; i < num; i++) {
+        const block = await getBlock(lastBlock - i);
+        blocks.push(block);
       }
-      return blocks
+      return blocks;
     }
 
-    const blocks = await getLastsNBlocks()
-    setLastBlocks(blocks)
+    async function fetchData() {
+      const blocks = await getLastsNBlocks();
+      setLastBlocks(blocks);
+    }
+
+    fetchData();
   }, [])
 
   if (!lastBlocks || lastBlocks.length === 0) { return ('Getting data...') }

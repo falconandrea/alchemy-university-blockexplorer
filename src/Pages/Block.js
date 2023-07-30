@@ -6,13 +6,16 @@ function Block () {
   const { hash } = useParams()
   const [block, setBlock] = useState({})
 
-  useEffect(async () => {
-    const result = await getBlock(hash.startsWith('0x') ? hash : parseInt(hash), true)
-    result.transactions = result.transactions.length
-    result.gasUsed = result.gasUsed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    result.gasLimit = result.gasLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    result.baseFeePerGas = convertToEth(result.baseFeePerGas)
-    setBlock(result)
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getBlock(hash.startsWith('0x') ? hash : parseInt(hash), true)
+      result.transactions = result.transactions.length
+      result.gasUsed = result.gasUsed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      result.gasLimit = result.gasLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      result.baseFeePerGas = convertToEth(result.baseFeePerGas)
+      setBlock(result)
+    }
+    fetchData()
   }, [hash])
 
   return (
